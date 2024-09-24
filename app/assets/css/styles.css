@@ -1,0 +1,225 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: rgb(245, 245, 247);
+}
+
+main {
+  width: 80vw;
+  min-height: 88vh;
+  margin: 0 auto;
+}
+
+.nav-link {
+  color: black;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: blue;
+  font-weight: bold;
+  border-bottom: 1px solid blue;
+}
+
+.nav-link.active {
+  color: blue;
+  font-weight: bold;
+  border-bottom: 1px solid blue;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+}
+li {
+  margin: 10px;
+}
+
+.logo {
+  width: 3rem;
+  margin: 5px 0 0 5px;
+}
+/* books */
+.book-card {
+  border: 1px solid rgb(233, 234, 232);
+  width: 300px;
+  margin: 10px auto;
+  font-family: arial;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.book-card:hover {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.book-price {
+  color: grey;
+  font-size: 18px;
+}
+
+.cart-button {
+  border: none;
+  outline: 0;
+  padding: 10px;
+  color: white;
+  background-color: rgb(0, 113, 227);
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 25px;
+}
+
+.cart-button:hover {
+  opacity: 0.7;
+}
+
+.book-image {
+  width: 8rem;
+  height: auto;
+}
+
+.center {
+  text-align: center;
+}
+
+button {
+  padding: 5px;
+}
+
+.books-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.book-details {
+  margin-left: 10px;
+  width: 100%;
+}
+
+.book-container {
+  display: flex;
+  align-items: center;
+  width: 40rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  margin: 10px auto;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* CSS */
+.button-12 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
+  border-radius: 6px;
+  border: none;
+
+  background: #6e6d70;
+  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1),
+    inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.5),
+    0px 0px 0px 0.5px rgba(0, 0, 0, 0.12);
+  color: #dfdedf;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-12 a {
+  color: white;
+}
+
+.button-12:focus {
+  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2),
+    0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}
+
+.book-image-detail {
+  width: 16rem;
+}
+
+.login-form {
+  margin: 10rem auto;
+  width: 300px;
+  background-color: white;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+input {
+  /* width: 100%; */
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold ;
+}
+
+.danger {
+  background-color: red;
+}
+
+.primary {
+  background-color: rgb(0, 113, 227);
+}
+
+.success {
+  background-color: green;
+}
+
+.danger,
+.primary,
+.success {
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px;
+  margin: 5px 5px 0 0;
+}
+
+/* table */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background-color: rgb(245, 232, 230);
+  /* background-color: rgb(255, 255, 255); */
+}
+/* table */
+
+@media only screen and (max-width: 900px) {
+  main {
+    width: 100vw;
+  }
+}
