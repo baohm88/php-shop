@@ -26,9 +26,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </div>
     <div>
       <ul class="flex-container">
-        <li><a href="http://localhost/shop/admin/index" class="nav-link <?= ($current_page == 'index' || $current_page == 'edit') ? 'active' : '' ?>"><i class="bi bi-house-heart-fill"></i> Books</a></li>
-        <li><a href="http://localhost/shop/admin/authors" class="nav-link <?= ($current_page == 'authors') ? 'active' : '' ?>"><i class="bi bi-book-fill"></i> Authors</a></li>
-        <li><a href="http://localhost/shop/admin/genres" class="nav-link <?= ($current_page == 'genres') ? 'active' : '' ?>"><i class="bi bi-journal-album"></i> Genres</a></li>
+        <li><a href="http://localhost/shop/admin/index" class="nav-link <?= ($current_page == 'index' || $current_page == 'edit_book') ? 'active' : '' ?>"><i class="bi bi-house-heart-fill"></i> Books</a></li>
+        <li><a href="http://localhost/shop/admin/authors" class="nav-link <?= ($current_page == 'authors' || $current_page == 'edit_author') ? 'active' : '' ?>"><i class="bi bi-book-fill"></i> Authors</a></li>
+        <li><a href="http://localhost/shop/admin/genres" class="nav-link <?= ($current_page == 'genres' || $current_page == 'edit_genre') ? 'active' : '' ?>"><i class="bi bi-journal-album"></i> Genres</a></li>
         <li><a href="http://localhost/shop/admin/publishers" class="nav-link <?= ($current_page == 'publishers') ? 'active' : '' ?>"><i class="bi bi-cart-check-fill"></i> Publishers</a></li>
         <?php if (isset($name)): ?>
           <li><a href="http://localhost/shop/user/logout" class="nav-link"><button><i class="bi bi-box-arrow-right"></i> Logout</button></a></li>

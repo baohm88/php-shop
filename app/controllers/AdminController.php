@@ -1,12 +1,13 @@
 <?php
 class AdminController extends BaseController
 {
-  private $__bookModel, $__authorModel;
+  private $__bookModel, $__authorModel, $__genreModel;
 
   function __construct($conn)
   {
     $this->__bookModel = $this->load_model('BookModel', $conn);
     $this->__authorModel = $this->load_model('AuthorModel', $conn);
+    $this->__genreModel = $this->load_model('GenreModel', $conn);
   }
 
   // books controller
@@ -158,7 +159,7 @@ class AdminController extends BaseController
         $this->__authorModel->saveAuthorToDB($name, $dob);
       }
 
-      header("Location: http://localhost/shop/admin");
+      header("Location: http://localhost/shop/admin/authors");
     }
   }
 
@@ -178,16 +179,70 @@ class AdminController extends BaseController
     $data['page'] = 'layouts/admin/genres';
     $data['page_title'] = 'Genres Page';
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      // filter authors
+      // filter genres
       $name = trim($_POST['name']);
       $dob = trim($_POST['dob']);
-      $data['authors'] = $this->__authorModel->filterAuthors($name, $dob);
+      $data['genres'] = $this->__genreModel->filterGenres($name, $dob);
     } else {
-      // show all authors
-      $data['authors'] = $this->__authorModel->getAllAuthors();
+      // show all genres
+      $data['genres'] = $this->__genreModel->getAllGenres();
     }
     $this->view("layouts/admin/admin", $data);
   }
+
+
+  function edit_genre()
+  {
+    $data['page'] = 'layouts/admin/genre_form';
+
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+      if (isset($_REQUEST['id'])) {
+        // edit
+        $data['page_title'] = 'Edit Genre';
+        $genreId = $_REQUEST['id'];
+        if (!$genreId > 0) {
+          $data['error'] = 'Wrong Genre ID. please enter a valid Genre ID';
+          $data['genre'] = '';
+        } else {
+          // get genre from db
+          $data['genre'] = $this->__genreModel->getGenreById($genreId);
+          if (empty($data['genre'])) {
+            $data['error'] = 'Genre with ID# ' . $genreId . ' is not found!';
+            $data['genre'] = '';
+          }
+        }
+      } else {
+        // add new
+        $data['page_title'] = 'Add New Genre';
+        $data['genre'] = '';
+      };
+
+      $this->view('layouts/admin/admin', $data);
+    } else {
+      // method = POST -> collect POST data
+      $name = $_POST['name'];
+      $id = $_POST['id'];
+      if ($id > 0) {
+        // update genre by id
+        $this->__genreModel->updateGenreById($id, $name);
+      } else {
+        // save genre to db
+        $this->__genreModel->saveGenreToDB($name);
+      }
+
+      header("Location: http://localhost/shop/admin/genres");
+    }
+  }
+
+
+  function delete_genre()
+  {
+    $genreId = $_REQUEST['id'];
+    $data['genre'] = $this->__genreModel->deleteGenreById($genreId);
+    header("Location: http://localhost/shop/admin/genres");
+  }
+
+
 
   // publishers controller
   public function publishers()

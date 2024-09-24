@@ -19,3 +19,14 @@ function confirmDeleteAuthor(authorId) {
       "http://localhost/shop/admin/delete_author/?id=" + authorId;
   }
 }
+
+function confirmDeleteGenre(genreId) {
+  const userConfirmed = confirm(
+    "Are you sure you want to delete the genre with ID# " + genreId + "?"
+  );
+
+  if (userConfirmed) {
+    window.location.href =
+      "http://localhost/shop/admin/delete_genre/?id=" + genreId;
+  }
+}
