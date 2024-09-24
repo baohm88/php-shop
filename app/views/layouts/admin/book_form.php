@@ -5,6 +5,9 @@ if (isset($data['error'])) {
   $error = $data['error'];
 }
 
+
+
+
 ?>
 
 <h1 class="center"><?= $data['page_title'] ?></h1>

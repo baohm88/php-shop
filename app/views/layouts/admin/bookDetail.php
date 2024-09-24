@@ -2,7 +2,7 @@
 $book = $data['book'];
 ?>
 
-<h1 class="center">Admin's Book Detail Page</h1>
+<h1 class="center">Book Detail Page</h1>
 
 <button class="button-12"><a href="http://localhost/shop/admin">Back to Books List</a></button>
 

@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <h2 class="center">List of Books</h2>
 <br>
 
-<button class="button-12"><a href="http://localhost/shop/admin/edit"><i class="bi bi-plus-lg"></i> Add New Book</a></button>
+<button class="button-12"><a href="http://localhost/shop/admin/edit_book"><i class="bi bi-plus-lg"></i> Add New Book</a></button>
 <br>
 
 <div class="center">
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <td>$<?= number_format($book->price_out, 2, '.', ',') ?></td>
       <td>$<?= number_format(($book->price_out - $book->price_in), 2, '.', ',') ?></td>
       <td class="center"><a href="http://localhost/shop/admin/book/?id=<?= $book->id ?>"><button class="success"><i class="bi bi-eye-fill"></i> View</button></a></td>
-      <td class="center"><a href="http://localhost/shop/admin/edit/?id=<?= $book->id ?>"><button class="primary"><i class="bi bi-pen-fill"></i> Edit</button></a></td>
+      <td class="center"><a href="http://localhost/shop/admin/edit_book/?id=<?= $book->id ?>"><button class="primary"><i class="bi bi-pen-fill"></i> Edit</button></a></td>
       <td class="center"><button class="danger" onclick="confirmDeleteBook(<?= $book->id ?>)"><i class="bi bi-trash3-fill"></i> Delete</button></td>
     </tr>
   <?php endforeach ?>

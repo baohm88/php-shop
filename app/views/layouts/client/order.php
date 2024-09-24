@@ -3,11 +3,11 @@
 
 if (!empty($data['orders'])) {
   $orders = $data['orders'];
-} 
+}
 ?>
 
 <h1 class="center">Yours Order</h1>
-<?php if ($orders) : ?>
+<?php if (isset($orders)) : ?>
   <ul>
     <?php foreach ($orders as $order): ?>
       <li>

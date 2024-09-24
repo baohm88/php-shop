@@ -11,4 +11,6 @@ if (isset($_GET["error"])) {
   <p><input type="password" name="password" placeholder="Password"></p>
   <p class="error-message"><?= isset($error) ? $error : "" ?></p>
   <input type="submit" value="Login">
+  <br><br>
+  <p>Have no account yet? <a href="http://localhost/shop/user/register">Register</a> here!</p>
 </form>

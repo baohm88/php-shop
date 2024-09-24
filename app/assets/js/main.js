@@ -4,6 +4,18 @@ function confirmDeleteBook(bookId) {
   );
 
   if (userConfirmed) {
-    window.location.href = "http://localhost/shop/admin/delete/?id=" + bookId;
+    window.location.href =
+      "http://localhost/shop/admin/delete_book/?id=" + bookId;
+  }
+}
+
+function confirmDeleteAuthor(authorId) {
+  const userConfirmed = confirm(
+    "Are you sure you want to delete the author with ID# " + authorId + "?"
+  );
+
+  if (userConfirmed) {
+    window.location.href =
+      "http://localhost/shop/admin/delete_author/?id=" + authorId;
   }
 }

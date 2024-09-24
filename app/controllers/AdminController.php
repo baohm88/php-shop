@@ -1,11 +1,12 @@
 <?php
 class AdminController extends BaseController
 {
-  private $__bookModel;
+  private $__bookModel, $__authorModel;
 
   function __construct($conn)
   {
     $this->__bookModel = $this->load_model('BookModel', $conn);
+    $this->__authorModel = $this->load_model('AuthorModel', $conn);
   }
 
   // books controller
@@ -22,13 +23,13 @@ class AdminController extends BaseController
       $data['books'] = $this->__bookModel->filterBooks($name, $price_in, $stock_quantity, $price_out);
     } else {
       // show all books
-      
+
       $data['books'] = $this->__bookModel->getAllBooks();
     }
-    
+
     $this->view("layouts/admin/admin", $data);
   }
-  
+
 
   function book()
   {
@@ -39,7 +40,7 @@ class AdminController extends BaseController
     $this->view('layouts/admin/admin', $data);
   }
 
-  function edit()
+  function edit_book()
   {
     $data['page'] = 'layouts/admin/book_form';
 
@@ -91,29 +92,100 @@ class AdminController extends BaseController
   }
 
 
-  function delete()
+  function delete_book()
   {
     $bookId = $_REQUEST['id'];
     $data['book'] = $this->__bookModel->deleteBookById($bookId);
     header("Location: http://localhost/shop/admin");
   }
 
-  // authors controller
+
+
+  // AUTHORS CONTROLLER
   public function authors()
   {
     $data['page'] = 'layouts/admin/authors';
     $data['page_title'] = 'Authors Page';
-    // $data['books'] = $this->__bookModel->getAllBooks();
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      // filter authors
+      $name = trim($_POST['name']);
+      $dob = trim($_POST['dob']);
+      $data['authors'] = $this->__authorModel->filterAuthors($name, $dob);
+    } else {
+      // show all authors
+      $data['authors'] = $this->__authorModel->getAllAuthors();
+    }
     $this->view("layouts/admin/admin", $data);
   }
 
+  function edit_author()
+  {
+    $data['page'] = 'layouts/admin/author_form';
 
-  // genres controller
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+      if (isset($_REQUEST['id'])) {
+        // edit
+        $data['page_title'] = 'Edit Author';
+        $authorId = $_REQUEST['id'];
+        if (!$authorId > 0) {
+          $data['error'] = 'Wrong Author ID. please enter a valid Author ID';
+          $data['author'] = '';
+        } else {
+          // get author from db
+          $data['author'] = $this->__authorModel->getAuthorById($authorId);
+          if (empty($data['author'])) {
+            $data['error'] = 'Author with ID# ' . $authorId . ' is not found!';
+            $data['author'] = '';
+          }
+        }
+      } else {
+        // add new
+        $data['page_title'] = 'Add New Author';
+        $data['author'] = '';
+      };
+
+      $this->view('layouts/admin/admin', $data);
+    } else {
+      // method = POST -> collect POST data
+      $name = $_POST['name'];
+      $dob = $_POST['dob'];
+      $id = $_POST['id'];
+      if ($id > 0) {
+        // update author by id
+        $this->__authorModel->updateAuthorById($id, $name, $dob);
+      } else {
+        // save author to db
+        $this->__authorModel->saveAuthorToDB($name, $dob);
+      }
+
+      header("Location: http://localhost/shop/admin");
+    }
+  }
+
+
+  function delete_author()
+  {
+    $authorId = $_REQUEST['id'];
+    $data['author'] = $this->__authorModel->deleteAuthorById($authorId);
+    header("Location: http://localhost/shop/admin/authors");
+  }
+
+
+
+  // GENRES CONTROLLER
   public function genres()
   {
     $data['page'] = 'layouts/admin/genres';
     $data['page_title'] = 'Genres Page';
-    // $data['books'] = $this->__bookModel->getAllBooks();
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      // filter authors
+      $name = trim($_POST['name']);
+      $dob = trim($_POST['dob']);
+      $data['authors'] = $this->__authorModel->filterAuthors($name, $dob);
+    } else {
+      // show all authors
+      $data['authors'] = $this->__authorModel->getAllAuthors();
+    }
     $this->view("layouts/admin/admin", $data);
   }
 
