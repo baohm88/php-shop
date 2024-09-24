@@ -1,5 +1,7 @@
 <?php
 $book = $data['book'];
+$current_page = basename($_SERVER['PHP_SELF']);
+show_data($current_page);
 ?>
 
 <h1 class="center">Book Detail Page</h1>

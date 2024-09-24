@@ -30,3 +30,16 @@ function confirmDeleteGenre(genreId) {
       "http://localhost/shop/admin/delete_genre/?id=" + genreId;
   }
 }
+
+function confirmDeletePublisher(publisherId) {
+  const userConfirmed = confirm(
+    "Are you sure you want to delete the publisher with ID# " +
+      publisherId +
+      "?"
+  );
+
+  if (userConfirmed) {
+    window.location.href =
+      "http://localhost/shop/admin/delete_publisher/?id=" + publisherId;
+  }
+}

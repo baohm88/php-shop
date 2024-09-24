@@ -8,6 +8,16 @@ $authors = $data['authors'];
 <button class="button-12"><a href="http://localhost/shop/admin/edit_author"><i class="bi bi-plus-lg"></i> Add New Book</a></button>
 <br>
 
+
+<div class="center">
+  <form method="POST">
+    <input type="text" name="name" placeholder="Book Name" value="<?= !empty($name) ? $name : '' ?>">
+    <input type="text" name="dob" placeholder="DOB Qty" value="<?= !empty($dob) ? $dob : '' ?>">
+
+    <input type="submit" value="Search">
+  </form>
+</div>
+
 <table>
   <tr>
     <th>ID</th>

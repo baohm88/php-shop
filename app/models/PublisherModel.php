@@ -1,6 +1,6 @@
 <?php
 
-class AuthorModel
+class PublisherModel
 {
   private $__conn;
 
@@ -9,11 +9,11 @@ class AuthorModel
     $this->__conn = $conn;
   }
 
-  public function getAllAuthors($limit = 100, $offset = 0)
+  public function getAllPublishers($limit = 100, $offset = 0)
   {
     try {
       if (isset($this->__conn)) {
-        $sql = "SELECT * FROM authors ORDER BY id DESC LIMIT :limit OFFSET :offset";
+        $sql = "SELECT * FROM publishers ORDER BY id DESC LIMIT :limit OFFSET :offset";
         $stmt = $this->__conn->prepare($sql);
         $stmt->bindParam("limit", $limit, PDO::PARAM_INT);
         $stmt->bindParam("offset", $offset, PDO::PARAM_INT);
@@ -28,11 +28,11 @@ class AuthorModel
   }
 
 
-  public function getAuthorById($id)
+  public function getPublisherById($id)
   {
     try {
       if (isset($this->__conn)) {
-        $sql = "SELECT * FROM authors WHERE id = :id";
+        $sql = "SELECT * FROM publishers WHERE id = :id";
         $stmt = $this->__conn->prepare($sql);
         $stmt->bindParam("id", $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -46,14 +46,15 @@ class AuthorModel
   }
 
 
-  public function saveAuthorToDB($name, $dob)
+  public function savePublisherToDB($name, $address, $contact)
   {
     try {
       if (isset($this->__conn)) {
-        $sql = "INSERT INTO authors (name, dob) VALUES (:name, :dob)";
+        $sql = "INSERT INTO publishers (name, address, contact) VALUES (:name, :address, :contact)";
         $stmt = $this->__conn->prepare($sql);
         $stmt->bindParam("name", $name, PDO::PARAM_STR);
-        $stmt->bindParam("dob", $dob, PDO::PARAM_STR);
+        $stmt->bindParam("address", $address, PDO::PARAM_STR);
+        $stmt->bindParam("contact", $contact, PDO::PARAM_STR);
         $stmt->execute();
       }
       return null;
@@ -63,14 +64,15 @@ class AuthorModel
   }
 
 
-  public function updateAuthorById($id, $name, $dob)
+  public function updatePublisherById($id, $name, $address, $contact)
   {
     try {
       if (isset($this->__conn)) {
-        $sql = "UPDATE authors SET name = :name, dob = :dob WHERE id = :id";
+        $sql = "UPDATE publishers SET name = :name, address = :address, contact = :contact WHERE id = :id";
         $stmt = $this->__conn->prepare($sql);
         $stmt->bindParam("name", $name, PDO::PARAM_STR);
-        $stmt->bindParam("dob", $dob, PDO::PARAM_STR);
+        $stmt->bindParam("address", $address, PDO::PARAM_STR);
+        $stmt->bindParam("contact", $contact, PDO::PARAM_STR);
         $stmt->bindParam("id", $id, PDO::PARAM_INT);
         $stmt->execute();
       }
@@ -81,19 +83,19 @@ class AuthorModel
   }
 
 
-  public function deleteAuthorById($id)
+  public function deletePublisherById($id)
   {
     try {
       if (isset($this->__conn)) {
-        $sql = "DELETE FROM authors WHERE id = :id";
+        $sql = "DELETE FROM publishers WHERE id = :id";
         $stmt = $this->__conn->prepare($sql);
         $stmt->bindParam('id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-          echo "Author with ID $id has been deleted successfully.";
+          echo "Publisher with ID $id has been deleted successfully.";
         } else {
-          echo "No Author found with ID $id";
+          echo "No Publisher found with ID $id";
         }
       }
       return null;
@@ -103,25 +105,29 @@ class AuthorModel
   }
 
 
-  public function filterAuthors($name = '', $dob = '', $limit = 10, $offset = 0)
+  public function filterPublishers($name = '', $address = '', $contact = '', $limit = 10, $offset = 0)
   {
     try {
       if (isset($this->__conn)) {
-        $sql = "SELECT * FROM authors WHERE 1=1";
+        $sql = "SELECT * FROM publishers WHERE 1=1";
         $params = [];
 
         // add filters if provided
         if (!empty($name)) {
           $sql .= " AND name LIKE :name";
-          $params['name'] = $name;
+          $params[':name'] = $name;
+        }
+        if (!empty($address)) {
+          $sql .= " AND address LIKE :address";
+          $params[':address'] = $address;
+        }
+        if (!empty($contact)) {
+          $sql .= " AND contact LIKE :contact";
+          $params[':contact'] = $contact;
         }
 
-        if (!empty($dob)) {
-          $sql .= " AND dob = :dob";
-          $params[':dob'] = $dob;
-        }
 
-        // sort authors by id DESC and limit results
+        // sort publishers by id DESC and limit results
         $sql .= " ORDER BY id DESC LIMIT :limit OFFSET :offset";
 
         // prepare sql stmt
@@ -130,7 +136,7 @@ class AuthorModel
         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 
         foreach ($params as $key => $value) {
-          $stmt->bindParam($key, $value, PDO::PARAM_INT);
+          $stmt->bindParam($key, $value);
         }
 
         // execute sql stmt

@@ -45,7 +45,9 @@ li {
 /* books */
 .book-card {
   border: 1px solid rgb(233, 234, 232);
+  background-color: white;
   width: 300px;
+  min-height: 400px;
   margin: 10px auto;
   font-family: arial;
   border-radius: 10px;
@@ -172,7 +174,7 @@ input {
 
 .error-message {
   color: red;
-  font-weight: bold ;
+  font-weight: bold;
 }
 
 .danger {

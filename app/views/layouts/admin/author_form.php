@@ -23,7 +23,7 @@ if (isset($data['error'])) {
   </p>
   <p>
     <label for="">Author DOB: </label>
-    <input type=" date" name="dob" placeholder="Author DOB" value="<?= $author->dob ?? '' ?>">
+    <input type="date" name="dob" placeholder="Author DOB" value="<?= $author->dob ?? '' ?>">
   </p>
   <input type="submit" value="Save">
 

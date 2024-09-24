@@ -1,13 +1,14 @@
 <?php
 class AdminController extends BaseController
 {
-  private $__bookModel, $__authorModel, $__genreModel;
+  private $__bookModel, $__authorModel, $__genreModel, $__publisherModel;
 
   function __construct($conn)
   {
     $this->__bookModel = $this->load_model('BookModel', $conn);
     $this->__authorModel = $this->load_model('AuthorModel', $conn);
     $this->__genreModel = $this->load_model('GenreModel', $conn);
+    $this->__publisherModel = $this->load_model('PublisherModel', $conn);
   }
 
   // books controller
@@ -249,7 +250,68 @@ class AdminController extends BaseController
   {
     $data['page'] = 'layouts/admin/publishers';
     $data['page_title'] = 'Publishers Page';
-    // $data['books'] = $this->__bookModel->getAllBooks();
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      // filter publishers
+      $name = trim($_POST['name']);
+      $dob = trim($_POST['dob']);
+      $data['publishers'] = $this->__publisherModel->filterPublishers($name, $dob);
+    } else {
+      // show all publishers
+      $data['publishers'] = $this->__publisherModel->getAllPublishers();
+    }
     $this->view("layouts/admin/admin", $data);
+  }
+
+  function edit_publisher()
+  {
+    $data['page'] = 'layouts/admin/publisher_form';
+
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+      if (isset($_REQUEST['id'])) {
+        // edit
+        $data['page_title'] = 'Edit Publisher';
+        $publisherId = $_REQUEST['id'];
+        if (!$publisherId > 0) {
+          $data['error'] = 'Wrong Publisher ID. please enter a valid Publisher ID';
+          $data['publisher'] = '';
+        } else {
+          // get publisher from db
+          $data['publisher'] = $this->__publisherModel->getPublisherById($publisherId);
+          if (empty($data['publisher'])) {
+            $data['error'] = 'Publisher with ID# ' . $publisherId . ' is not found!';
+            $data['publisher'] = '';
+          }
+        }
+      } else {
+        // add new
+        $data['page_title'] = 'Add New Publisher';
+        $data['publisher'] = '';
+      };
+
+      $this->view('layouts/admin/admin', $data);
+    } else {
+      // method = POST -> collect POST data
+      $name = $_POST['name'];
+      $address = $_POST['address'];
+      $contact = $_POST['contact'];
+      $id = $_POST['id'];
+      if ($id > 0) {
+        // update publisher by id
+        $this->__publisherModel->updatePublisherById($id, $name, $address, $contact);
+      } else {
+        // save publisher to db
+        $this->__publisherModel->savePublisherToDB($name);
+      }
+
+      header("Location: http://localhost/shop/admin/publishers");
+    }
+  }
+
+
+  function delete_publisher()
+  {
+    $publisherId = $_REQUEST['id'];
+    $data['publisher'] = $this->__publisherModel->deletePublisherById($publisherId);
+    header("Location: http://localhost/shop/admin/publishers");
   }
 }
